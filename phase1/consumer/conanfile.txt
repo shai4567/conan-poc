@@ -1,0 +1,9 @@
+[requires]
+Hello/0.0.2@mobileye/testing
+
+[imports]
+bin, * -> /homes/shaiha/conan_poc/phase1/consumer/bin
+include, * -> /homes/shaiha/conan_poc/phase1/consumer
+
+[generators]
+cmake
