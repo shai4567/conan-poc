@@ -1,0 +1,42 @@
+version: '3'
+
+tasks:
+  docker-build:
+    vars:
+      IMAGE_NAME: "conan_toolchain"
+      USER_ID: $(id -u)
+      USER_GROUP: $(id -g)
+    cmds:
+      - "docker build -t {{.IMAGE_NAME}} --build-arg USER_ID={{.USER_ID}} --build-arg USER_GROUP={{.USER_GROUP}} ."
+    status:
+      - docker images | grep -i "conan_toolchain"
+
+  docker-run-local:
+    args:
+      name: docker name
+      cmd: cmd to run
+      workdir: path to the git repo
+    vars:
+      dimage: conan_toolchain
+    deps:
+      - docker-build
+    cmds:
+      - |-
+        docker run \
+        --name {{.name}} \
+        --user $(id -u):1000 \
+        -it --rm  \
+        -v "{{.workdir}}:{{.workdir}}" \
+        --workdir={{.workdir}} \
+        {{.dimage}} \
+        {{.cmd}}
+
+  conan:
+    desc: |-
+      Running Conan environment on top of brand new Docker container
+    cmds:
+      - task: docker-run-local
+        vars:
+          workdir: $(pwd)
+          cmd: "/bin/bash"
+          name: "conan_container"

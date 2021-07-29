@@ -3,6 +3,11 @@
 ## Prerequisites
 
 * Conan installed
+    * Or simply run:
+    ```bash
+    task conan
+    ```
+    * run conan -v - in order to make sure it is working
 * cmake installed (Our current hands-on example using cmake sample app)
 * Change on phase2/conanfile.py - line 24 --> Your path to the project
 
@@ -52,8 +57,10 @@ Example used in the p.o.c: conan create . mobileye/testing
 ```bash
 conan remote add {{REMOTE_NAME}} {{REMOTE_PATH}}
 ```
-Example used in the p.o.c: conan remote add mobileye PATH_TO_SERVER
-(Path can be found in phase1 readme)
+Example used in the p.o.c:
+```bash
+conan remote add mobileye https://artifactory.sddc.mobileye.com:443/artifactory/api/conan/di-dev-conan-local
+```
 
 * Assign User to remote:
 ```bash
